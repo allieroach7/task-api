@@ -78,11 +78,11 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: ../components/schemas/Task.yaml
+                  $ref: '#/components/schemas/Task'
           '400':
-            $ref: ../components/responses/BadRequest.yaml
+            $ref: '#/components/responses/BadRequest'
           '404':
-            $ref: ../components/responses/NotFound.yaml
+            $ref: '#/components/responses/NotFound'
 components:
   schemas:
     Task:
