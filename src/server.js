@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(morgan('tiny'));
 
 try {
-  const specs = YAML.load('.\docs\openapi.yaml');
+  const specs = YAML.load('./docs/openapi.yaml');
   console.log('Swagger specs loaded successfully');
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 } catch (error) {
