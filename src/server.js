@@ -3,24 +3,36 @@ import morgan from 'morgan';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'js-yaml';
+import fs from 'fs';
 import taskRoutes from './routes/taskRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
 
+// CORRECT WAY: Read the file first, then parse YAML
+let specs;
 try {
-  const specs = YAML.load('./docs/openapi.yaml');
-  console.log('OpenAPI spec loaded successfully');
-  console.log('Spec keys:', Object.keys(specs));
-  console.log('OpenAPI version:', specs.openapi);
-  console.log('Info:', specs.info);
+  const fileContent = fs.readFileSync('./docs/openapi.yaml', 'utf8');
+  specs = YAML.load(fileContent);
+  console.log('OpenAPI spec loaded successfully:', specs.openapi);
 } catch (error) {
   console.error('Error loading OpenAPI spec:', error);
-  process.exit(1);
+  // Fallback minimal spec
+  specs = {
+    openapi: "3.1.0",
+    info: {
+      title: "Task API",
+      version: "1.0.0"
+    },
+    paths: {}
+  };
 }
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
