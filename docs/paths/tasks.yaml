@@ -45,6 +45,8 @@ post:
             $ref: ../components/schemas/Task.yaml
     '400':
       $ref: ../components/responses/BadRequest.yaml
+
+# NEW: Add the get task by ID endpoint - MAKE SURE THIS IS AT THE ROOT LEVEL
 '/tasks/{id}':
   get:
     summary: Get a single task by ID
