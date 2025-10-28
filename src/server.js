@@ -13,10 +13,13 @@ app.use(morgan('tiny'));
 
 try {
   const specs = YAML.load('./docs/openapi.yaml');
-  console.log('Swagger specs loaded successfully');
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+  console.log('OpenAPI spec loaded successfully');
+  console.log('Spec keys:', Object.keys(specs));
+  console.log('OpenAPI version:', specs.openapi);
+  console.log('Info:', specs.info);
 } catch (error) {
-  console.error('Error loading Swagger YAML:', error);
+  console.error('Error loading OpenAPI spec:', error);
+  process.exit(1);
 }
 
 app.get('/health', (req, res) => {
