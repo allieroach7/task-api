@@ -16,7 +16,7 @@ app.use(morgan('tiny'));
 // CORRECT WAY: Read the file first, then parse YAML
 let specs;
 try {
-  const fileContent = fs.readFileSync('./docs/openapi.yaml', 'utf8');
+  const fileContent = fs.readFileSync('./public/bundled.yaml', 'utf8');
   specs = YAML.load(fileContent);
   console.log('OpenAPI spec loaded successfully:', specs.openapi);
 } catch (error) {
